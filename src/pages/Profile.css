@@ -38,13 +38,32 @@
   margin-bottom: 0;
 }
 
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
 .profile-section h2 {
   font-size: 20px;
   font-weight: 600;
   color: #0a66c2;
-  margin-bottom: 24px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #e0e0e0;
+  margin: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .form-group {
@@ -124,6 +143,185 @@
   border-color: #999;
 }
 
+/* Achievements Section */
+.add-achievement-button {
+  background-color: #0a66c2;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-achievement-button:hover {
+  background-color: #004182;
+}
+
+.add-achievement-form {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 2px dashed #ddd;
+}
+
+.save-achievement-button {
+  background-color: #0a66c2;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 8px;
+}
+
+.save-achievement-button:hover {
+  background-color: #004182;
+}
+
+.form-hint {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #999;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-style: italic;
+}
+
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.achievement-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  border-left: 4px solid #0a66c2;
+  position: relative;
+}
+
+.achievement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.achievement-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.achievement-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0a66c2;
+  margin: 0;
+}
+
+.verification-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.badge-verified {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-rejected {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.remove-achievement-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.remove-achievement-button:hover {
+  color: #d32f2f;
+}
+
+.achievement-description {
+  color: #666;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.achievement-date {
+  font-size: 14px;
+  color: #999;
+  margin: 8px 0;
+}
+
+.verification-link {
+  display: inline-block;
+  color: #0a66c2;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 8px;
+  transition: color 0.2s;
+}
+
+.verification-link:hover {
+  color: #004182;
+  text-decoration: underline;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  background-color: white;
+  cursor: pointer;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: #0a66c2;
+}
+
 @media (prefers-color-scheme: dark) {
   .profile {
     background-color: #1a1a1a;
@@ -165,6 +363,34 @@
   
   .cancel-button:hover {
     background-color: #1a1a1a;
+  }
+
+  .add-achievement-form {
+    background-color: #1a1a1a;
+    border-color: #444;
+  }
+
+  .achievement-card {
+    background-color: #1a1a1a;
+    border-left-color: #70b5f9;
+  }
+
+  .achievement-card h3 {
+    color: #70b5f9;
+  }
+
+  .achievement-description {
+    color: #cccccc;
+  }
+
+  .form-group select {
+    background-color: #1a1a1a;
+    border-color: #444;
+    color: #cccccc;
+  }
+
+  .empty-state {
+    color: #666;
   }
 }
 
