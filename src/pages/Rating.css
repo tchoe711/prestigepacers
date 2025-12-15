@@ -5,7 +5,7 @@
 }
 
 .rating-container {
-  max-width: 1128px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -15,157 +15,210 @@
   color: #0a66c2;
   margin-bottom: 8px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  text-align: center;
 }
 
 .rating-subtitle {
   font-size: 18px;
   color: #666666;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
+  text-align: center;
 }
 
-.rating-content {
+.comparison-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.comparison-stats {
+  text-align: center;
+  font-size: 16px;
+  color: #666666;
+  font-weight: 500;
+}
+
+.comparison-cards {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr auto 1fr;
   gap: 32px;
+  align-items: center;
+  margin: 40px 0;
 }
 
-.people-list h2 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #0a66c2;
-  margin-bottom: 24px;
-}
-
-.people-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
-
-.person-card {
+.person-comparison-card {
   background-color: #ffffff;
-  border-radius: 8px;
-  padding: 24px;
+  border-radius: 12px;
+  padding: 40px;
   text-align: center;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
-  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-.person-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+.person-comparison-card:hover:not(.selected) {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   border-color: #0a66c2;
 }
 
-.person-card.selected {
+.person-comparison-card.selected {
   border-color: #0a66c2;
-  background-color: #e6f2ff;
+  background: linear-gradient(135deg, #e6f2ff 0%, #ffffff 100%);
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(10, 102, 194, 0.3);
 }
 
-.person-avatar {
-  width: 80px;
-  height: 80px;
+.person-comparison-card.winner {
+  border-color: #0a66c2;
+  background: linear-gradient(135deg, #e6f2ff 0%, #ffffff 100%);
+}
+
+.person-comparison-card.not-selected {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.person-avatar-large {
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background: linear-gradient(135deg, #0077b5 0%, #00a0dc 100%);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 48px;
   font-weight: 600;
-  margin: 0 auto 16px;
+  margin: 0 auto 24px;
 }
 
-.person-card h3 {
-  font-size: 20px;
+.person-comparison-card h2 {
+  font-size: 28px;
   font-weight: 600;
   color: #0a66c2;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .person-title {
-  font-size: 16px;
+  font-size: 18px;
   color: #666666;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  font-weight: 500;
 }
 
 .person-company {
-  font-size: 14px;
+  font-size: 16px;
   color: #999999;
-  margin: 0;
+  margin-bottom: 8px;
 }
 
-.rating-panel {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 32px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.rating-panel h2 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #0a66c2;
-  margin-bottom: 24px;
-}
-
-.rating-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.rating-stars {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-}
-
-.star-button {
-  background: none;
-  border: none;
-  font-size: 36px;
-  color: #ddd;
-  cursor: pointer;
-  transition: color 0.2s, transform 0.2s;
-  padding: 0;
-}
-
-.star-button:hover {
-  color: #ffc107;
-  transform: scale(1.1);
-}
-
-.rating-comment {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.person-experience {
   font-size: 14px;
-  font-family: inherit;
-  resize: vertical;
+  color: #666666;
+  margin-top: 12px;
+  font-style: italic;
 }
 
-.rating-comment:focus {
-  outline: none;
-  border-color: #0a66c2;
-}
-
-.submit-rating {
+.selection-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   background-color: #0a66c2;
   color: white;
-  border: none;
-  padding: 12px 24px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #0a66c2;
+  background-color: #ffffff;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.comparison-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.skip-button {
+  background-color: transparent;
+  color: #666666;
+  border: 2px solid #ddd;
+  padding: 12px 32px;
   border-radius: 24px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
-.submit-rating:hover {
-  background-color: #004182;
+.skip-button:hover {
+  background-color: #f3f2ef;
+  border-color: #999;
+  color: #333;
+}
+
+.selection-feedback {
+  text-align: center;
+  padding: 20px;
+  background-color: #e6f2ff;
+  border-radius: 8px;
+  color: #0a66c2;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .comparison-cards {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .vs-divider {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    margin: 0 auto;
+  }
+
+  .person-comparison-card {
+    padding: 32px 24px;
+  }
+
+  .person-avatar-large {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -174,33 +227,49 @@
   }
   
   .rating h1,
-  .people-list h2,
-  .rating-panel h2,
-  .person-card h3 {
+  .person-comparison-card h2 {
     color: #70b5f9;
   }
   
   .rating-subtitle,
-  .person-title {
+  .comparison-stats,
+  .person-title,
+  .person-experience {
     color: #cccccc;
   }
   
-  .person-card {
+  .person-comparison-card {
     background-color: #2a2a2a;
   }
   
-  .person-card.selected {
-    background-color: #1a3a5a;
+  .person-comparison-card.selected,
+  .person-comparison-card.winner {
+    background: linear-gradient(135deg, #1a3a5a 0%, #2a2a2a 100%);
+    border-color: #70b5f9;
   }
   
-  .rating-panel {
+  .person-comparison-card.not-selected {
+    opacity: 0.4;
+  }
+
+  .vs-divider {
     background-color: #2a2a2a;
+    color: #70b5f9;
   }
-  
-  .rating-comment {
-    background-color: #1a1a1a;
+
+  .skip-button {
+    color: #cccccc;
     border-color: #444;
-    color: #cccccc;
+  }
+
+  .skip-button:hover {
+    background-color: #2a2a2a;
+    border-color: #666;
+  }
+
+  .selection-feedback {
+    background-color: #1a3a5a;
+    color: #70b5f9;
   }
 }
 
