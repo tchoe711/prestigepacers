@@ -1,7 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
 import './Profile.css'
 
+const API_URL = 'http://localhost:3001/api'
+
 function Profile() {
+  const { getAuthToken } = useAuth()
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+  const [message, setMessage] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     title: '',
@@ -18,8 +25,48 @@ function Profile() {
     description: '',
     date: '',
     verificationLink: '',
-    verificationStatus: 'pending', // pending, verified, rejected
+    verificationStatus: 'pending',
   })
+
+  // Fetch profile data on mount
+  useEffect(() => {
+    fetchProfile()
+  }, [])
+
+  const fetchProfile = async () => {
+    try {
+      setLoading(true)
+      const token = getAuthToken()
+      const response = await fetch(`${API_URL}/profile`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+
+      if (response.ok) {
+        const profile = await response.json()
+        setFormData({
+          name: profile.name || '',
+          title: profile.title || '',
+          company: profile.company || '',
+          bio: profile.bio || '',
+          email: profile.email || '',
+          location: profile.location || '',
+        })
+        setAchievements(profile.achievements || [])
+      } else if (response.status === 404) {
+        // Profile doesn't exist yet, that's okay
+        console.log('Profile not found, will be created on first save')
+      } else {
+        throw new Error('Failed to fetch profile')
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error)
+      setMessage('Error loading profile. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleChange = (e) => {
     setFormData({
@@ -59,10 +106,38 @@ function Profile() {
     setAchievements(achievements.filter((ach) => ach.id !== id))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // In a real app, this would save to a backend
-    alert('Profile saved successfully!')
+    setSaving(true)
+    setMessage('')
+
+    try {
+      const token = getAuthToken()
+      const response = await fetch(`${API_URL}/profile`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ...formData,
+          achievements,
+        }),
+      })
+
+      if (response.ok) {
+        setMessage('Profile saved successfully!')
+        setTimeout(() => setMessage(''), 3000)
+      } else {
+        const error = await response.json()
+        throw new Error(error.error || 'Failed to save profile')
+      }
+    } catch (error) {
+      console.error('Error saving profile:', error)
+      setMessage(error.message || 'Error saving profile. Please try again.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   const getVerificationBadgeClass = (status) => {
@@ -87,6 +162,16 @@ function Profile() {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="profile">
+        <div className="profile-container">
+          <p>Loading profile...</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="profile">
       <div className="profile-container">
@@ -94,6 +179,12 @@ function Profile() {
         <p className="profile-subtitle">
           Update your information and showcase your professional achievements
         </p>
+
+        {message && (
+          <div className={`profile-message ${message.includes('success') ? 'success' : 'error'}`}>
+            {message}
+          </div>
+        )}
 
         <form className="profile-form" onSubmit={handleSubmit}>
           {/* Basic Information Section */}
@@ -303,11 +394,11 @@ function Profile() {
           </div>
 
           <div className="form-actions">
-            <button type="submit" className="save-button">
-              Save Changes
+            <button type="submit" className="save-button" disabled={saving}>
+              {saving ? 'Saving...' : 'Save Changes'}
             </button>
-            <button type="button" className="cancel-button">
-              Cancel
+            <button type="button" className="cancel-button" onClick={() => fetchProfile()}>
+              Reset
             </button>
           </div>
         </form>

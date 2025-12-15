@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './Login.css'
 
@@ -10,7 +10,7 @@ function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
 
@@ -19,11 +19,11 @@ function Login() {
       return
     }
 
-    const success = login(email, password)
-    if (success) {
+    const result = await login(email, password)
+    if (result.success) {
       navigate('/')
     } else {
-      setError('Invalid email or password')
+      setError(result.error || 'Invalid email or password')
     }
   }
 
@@ -72,7 +72,7 @@ function Login() {
 
           <div className="login-footer">
             <p>
-              New to Prestige Pacers? <a href="/signup">Join now</a>
+              New to Prestige Pacers? <Link to="/signup">Join now</Link>
             </p>
           </div>
         </div>
